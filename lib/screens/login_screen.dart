@@ -52,27 +52,17 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: const Color(0xFF0F0F1E),
       body: Stack(
         children: [
-          // Background Decorative Blobs
-          Positioned(
-            top: -100,
-            left: -100,
-            child: _buildBlob(300, const Color(0xFF6C63FF).withOpacity(0.15)),
-          ),
-          Positioned(
-            bottom: -50,
-            right: -50,
-            child: _buildBlob(250, const Color(0xFF6C63FF).withOpacity(0.1)),
-          ),
-          
           SafeArea(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: SizedBox(
-                height: size.height - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom,
+                height:
+                    size.height -
+                    MediaQuery.of(context).padding.top -
+                    MediaQuery.of(context).padding.bottom,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Dynamic Logo
                     TweenAnimationBuilder(
                       tween: Tween<double>(begin: 0, end: 1),
                       duration: const Duration(milliseconds: 800),
@@ -97,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: const Color(0xFF6C63FF).withOpacity(0.4),
                               blurRadius: 30,
                               spreadRadius: 5,
-                            )
+                            ),
                           ],
                         ),
                         child: const Icon(
@@ -108,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     const SizedBox(height: 40),
-                    
+
                     // Titles
                     const Text(
                       'Welcome Back',
@@ -130,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     const SizedBox(height: 60),
-                    
+
                     // Form fields
                     CustomTextField(
                       controller: _emailController,
@@ -145,9 +135,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       icon: Icons.shield_outlined,
                       isPassword: true,
                     ),
-                    
+
                     const SizedBox(height: 30),
-                    
+
                     // Login Button
                     SizedBox(
                       width: double.infinity,
@@ -164,7 +154,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         child: authProvider.isLoading
-                            ? const CircularProgressIndicator(color: Colors.white)
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
                             : const Text(
                                 'Sign In',
                                 style: TextStyle(
@@ -175,22 +167,26 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                       ),
                     ),
-                    
+
                     const SizedBox(height: 40),
-                    
+
                     // Footer
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           "New to the orbit? ",
-                          style: TextStyle(color: Colors.white.withOpacity(0.5)),
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(0.5),
+                          ),
                         ),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (_) => const SignupScreen()),
+                              MaterialPageRoute(
+                                builder: (_) => const SignupScreen(),
+                              ),
                             );
                           },
                           child: const Text(
@@ -209,17 +205,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildBlob(double size, Color color) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: color,
       ),
     );
   }

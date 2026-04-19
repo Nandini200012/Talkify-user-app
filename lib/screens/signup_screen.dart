@@ -18,7 +18,9 @@ class _SignupScreenState extends State<SignupScreen> {
   void _signup() async {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     try {
-      if (_nameController.text.isEmpty || _emailController.text.isEmpty || _passwordController.text.isEmpty) {
+      if (_nameController.text.isEmpty ||
+          _emailController.text.isEmpty ||
+          _passwordController.text.isEmpty) {
         throw 'Please fill in all fields';
       }
 
@@ -64,23 +66,14 @@ class _SignupScreenState extends State<SignupScreen> {
       extendBodyBehindAppBar: true,
       body: Stack(
         children: [
-          // Background Decorative Blobs
-          Positioned(
-            top: -50,
-            right: -100,
-            child: _buildBlob(300, const Color(0xFF6C63FF).withOpacity(0.12)),
-          ),
-          Positioned(
-            bottom: -100,
-            left: -50,
-            child: _buildBlob(250, const Color(0xFF6C63FF).withOpacity(0.08)),
-          ),
-          
           SafeArea(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: SizedBox(
-                height: size.height - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom,
+                height:
+                    size.height -
+                    MediaQuery.of(context).padding.top -
+                    MediaQuery.of(context).padding.bottom,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,7 +98,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                     ),
                     const SizedBox(height: 50),
-                    
+
                     // Form fields
                     CustomTextField(
                       controller: _nameController,
@@ -126,9 +119,9 @@ class _SignupScreenState extends State<SignupScreen> {
                       icon: Icons.shield_outlined,
                       isPassword: true,
                     ),
-                    
+
                     const SizedBox(height: 40),
-                    
+
                     // Signup Button
                     SizedBox(
                       width: double.infinity,
@@ -145,7 +138,9 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                         ),
                         child: authProvider.isLoading
-                            ? const CircularProgressIndicator(color: Colors.white)
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
                             : const Text(
                                 'Create Account',
                                 style: TextStyle(
@@ -156,9 +151,9 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                       ),
                     ),
-                    
+
                     const SizedBox(height: 30),
-                    
+
                     Center(
                       child: TextButton(
                         onPressed: () => Navigator.pop(context),
@@ -177,17 +172,6 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildBlob(double size, Color color) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: color,
       ),
     );
   }
