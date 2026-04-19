@@ -1,94 +1,47 @@
-![Talkify Logo](/Users/nandinin/.gemini/antigravity/brain/120daa48-8805-402c-80a1-95d8be5f1e5e/talkify_logo_banner_1776524697007.png)
+# Talkify User App 
 
-# Talkify - Premium RTC Solution
-
-Talkify is a state-of-the-art real-time communication application built with Flutter, designed to provide seamless audio and video calling experiences. It leverages a robust cloud architecture to ensure high availability, low latency, and secure peer-to-peer signaling.
-
-## 🚀 Key Features
-
-- **Crystal Clear Calls**: High-definition audio and video calling powered by Agora RTC.
-- **Real-time Signaling**: Instant call initiation and lifecycle management using Firebase Firestore.
-- **Intelligent Notifications**: Foreground and background call alerts via Firebase Cloud Messaging (FCM).
-- **Presence Management**: Real-time tracking of user online/offline status.
-- **Glassmorphism UI**: A premium, modern design language featuring translucent elements and vibrant gradients.
-- **Secure Authentication**: Robust user identity management via Firebase Auth.
+Talkify is a high-performance, real-time communication platform built with Flutter. This repository contains the **User App**, designed for users to browse contacts, check availability, and initiate high-quality audio and video calls.
 
 ---
 
-## 🛠 Tech Stack & Integrations
-
-### 1. Firebase Ecosystem
-
-Talkify uses Firebase as its primary backend-as-a-service (BaaS) for several critical functions:
-
-- **Authentication**: Handles user registration and secure login.
-- **Firestore**:
-  - **User Data**: Stores profiles and FCM tokens.
-  - **Signaling**: Acts as a real-time message bus for call events (ringing, accepted, rejected, ended).
-  - **Presence**: Tracks user heartbeat to show availability.
-- **Cloud Messaging (FCM)**: Essential for waking up the `Receiver App` when a call is initiated while the app is in the background or terminated.
-
-### 2. Agora RTC Engine
-
-For the media layer, we integrated **Agora SDK**, which provides:
-
-- **Scalable Video/Audio**: Dynamic bitrate adjustment for varying network conditions.
-- **Global Network**: Low-latency routing via Agora's SD-RTN™.
-- **Channel Management**: Automatic channel creation and token-based security for every call session.
-
-### 3. Webhook Architecture (Cloud Functions)
-
-To decouple client-side logic from signaling management, we implemented a **Webhook Service**:
-
-- **`startCall` Endpoint**: Instead of clients writing directly to Firestore signaling collections, they trigger a secure webhook. This webhook:
-  1. Validates the caller and receiver.
-  2. Generates necessary Agora tokens.
-  3. Triggers the FCM notification to the receiver.
-  4. Initializes the Firestore call document.
-- **Mock Mode**: For rapid development, the service includes a `Mock Mode` that simulates backend behavior without requiring a full Cloud Function deployment.
+##  Key Features
+- **Real-time Video/Audio Calling**: Seamless communication powered by Agora SDK with dedicated modes for voice and video.
+- **Presence System**: Real-time tracking of recipient availability (Online/Offline) via Firestore heartbeat.
+- **Premium Glassmorphism UI**: A stunning, modern interface featuring glassmorphism effects, smooth animations, and a curated color palette.
+- **Advanced Call Management**: Full control over call initiation, real-time state synchronization, and in-call media toggles.
 
 ---
 
-## 🔧 Setup & Configuration
+##  Technical Architecture
 
-### Firebase Setup
+### 1. Firebase Integration 
+Firebase provides the foundation for data persistence and identity management:
+- **Firebase Authentication**: Secure user registration and login with persistent session handling.
+- **Cloud Firestore**: Acts as the signaling server and presence database, tracking user status and active call sessions in real-time.
+- **Cloud Functions**: Power the backend logic for secure call initiation and lifecycle events.
 
-1. Create a project in the [Firebase Console](https://console.firebase.google.com/).
-2. Enable **Email/Password Auth**.
-3. Create a **Firestore Database** in test mode.
-4. Add an Android/iOS app and download `google-services.json` / `GoogleService-Info.plist`.
-5. Run `flutterfire configure` to generate `firebase_options.dart`.
+### 2. Agora SDK Implementation 🎥
+The app leverages the **Agora RTC SDK** for industry-leading media delivery:
+- **Dynamic Media Handling**: Supports seamless switching between audio and video calling.
+- **Optimized RTC Engine**: Configured for low latency and high reliability across varying network conditions.
+- **In-Call Controls**: Real-time microphone muting, speakerphone toggles, and camera switching.
 
-### Agora Setup
+### 3. Webhook & Signaling System ⚓
+The call lifecycle is managed through a sophisticated webhook-based architecture:
+- **`startCall` Webhook**: Triggered when a user initiates a call. It validates the session, creates Firestore metadata, and signals the receiver.
+- **`handleCallEvent` Webhook**: Manages state transitions like `accepted`, `rejected`, or `ended`, ensuring the UI reflects the current call state instantly.
+- **Mock Fallback**: Includes a robust mock mode for development and testing without live backend dependencies.
 
-1. Register on [Agora.io](https://www.agora.io/) and create a project.
-2. Obtain your **App ID**.
-3. Update the `agoraAppId` in `lib/providers/call_provider.dart`.
-4. Ensure your project has `CAMERA` and `RECORD_AUDIO` permissions configured in `AndroidManifest.xml` and `Info.plist`.
-
-### Webhook Configuration
-
-1. Deploy the Cloud Functions located in the backend repository (if available).
-2. Update the `_functionsBaseUrl` in `lib/services/webhook_service.dart`.
-3. If no backend is deployed, the app will automatically enter **Mock Mode** when it detects a placeholder URL.
-
----
-
-## 📱 User App vs. Receiver App
-
-Talkify is split into two specialized applications:
-
-- **User App**: The primary interface for users to browse contacts and initiate calls.
-- **Receiver App**: Optimized for high-priority background listening, ensuring no incoming calls are missed even when the device is locked.
+### 4. Push Notifications & Presence 🛰️
+- **Presence Heartbeat**: Implements a real-time status system to ensure callers only attempt to reach available users.
+- **FCM Integration**: Uses Firebase Cloud Messaging to receive status updates and call event notifications.
 
 ---
 
-## 🎨 Design Philosophy
-
-Talkify follows a **Premium Dark Aesthetic**. We use:
-
-- **Custom Gradients**: Soft violet and cyan tones for a tech-forward feel.
-- **Micro-animations**: Smooth transitions between call states.
-- **Interactive UI**: Animated buttons and glassmorphic cards for an immersive experience.
+## 📁 Project Structure
+- `lib/screens/`: Premium UI implementation including Glassmorphism login/signup and dynamic call screens.
+- `lib/providers/`: State management for authentication, user presence, and call signaling logic.
+- `lib/services/`: Core logic for Firebase, Agora integration, and webhook communication.
+- `lib/models/`: Structured data models for `Call` and `User` entities.
 
 ---
